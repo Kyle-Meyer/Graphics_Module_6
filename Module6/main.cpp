@@ -12,6 +12,8 @@
 //
 //============================================================================
 
+#include "SDL3/SDL_events.h"
+#include "SDL3/SDL_keycode.h"
 #include "filesystem_support/file_locator.hpp"
 #include "geometry/geometry.hpp"
 #include "scene/graphics.hpp"
@@ -67,7 +69,20 @@ void sleep(int32_t milliseconds)
  */
 void display()
 {
-    // Student to define. Module 6
+    // Clear the color and depth buffers
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    // Initialize scene state
+    g_scene_state.init();
+    
+    // Draw the scene (if root exists)
+    if (g_scene_root)
+    {
+        g_scene_root->draw(g_scene_state);
+    }
+    
+    // Swap buffers to display
+    SDL_GL_SwapWindow(g_sdl_window);
 }
 
 /**
@@ -106,7 +121,17 @@ bool handle_key_event(const SDL_Event &event)
 {
     bool cont_program = true;
 
-    // Student to define. Module 7
+   if(event.type == SDL_EVENT_KEY_DOWN)
+   {
+      switch (event.key.key)
+      {
+         case SDLK_ESCAPE:
+            cont_program = false; 
+            break;
+         default:
+            break;
+      }
+   }
 
     return cont_program;
 }
@@ -175,6 +200,52 @@ void construct_scene()
     // Student to define. Module 6 - define scene.
 }
 
+void create_window()
+{
+   // Set OpenGL attributes before creating the window
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+   SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+   SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+   SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 4);
+   
+   // Create the window
+   g_sdl_window = SDL_CreateWindow(
+       "Module 6 - 3D Scene",
+       800,  // width
+       600,  // height
+       SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
+   );
+   
+   if (!g_sdl_window)
+   {
+       std::cout << "Error creating window: " << SDL_GetError() << '\n';
+       SDL_Quit();
+       exit(1);
+   }
+   
+   // Position the window
+   SDL_SetWindowPosition(g_sdl_window, 100, 100);
+}
+
+void set_gl_args()
+{
+   // Enable depth testing for hidden surface removal
+   glEnable(GL_DEPTH_TEST);
+   glDepthFunc(GL_LESS);
+   
+   // Enable back-face culling
+   glEnable(GL_CULL_FACE);
+   glCullFace(GL_BACK);
+   glFrontFace(GL_CCW);  // Counter-clockwise winding for front faces
+   
+   // Enable multi-sampling anti-aliasing
+   glEnable(GL_MULTISAMPLE);
+}
+
+
 /**
  * Main
  */
@@ -202,6 +273,7 @@ int main(int argc, char **argv)
 
     // Initialize display mode and window
     // Student to define - window creation.
+    create_window();
 
     // Initialize OpenGL
     g_gl_context = SDL_GL_CreateContext(g_sdl_window);
@@ -225,7 +297,7 @@ int main(int argc, char **argv)
     // Construct scene.
     construct_scene();
 
-    // Student to define - depth buffer, clear color, back-face culling support
+    set_gl_args();
 
     // Set a fixed perspective projection and view.
     cg::Matrix4x4 projection;
