@@ -80,7 +80,7 @@ void display()
     {
         g_scene_root->draw(g_scene_state);
     }
-    
+    cg::check_error("After draw");
     // Swap buffers to display
     SDL_GL_SwapWindow(g_sdl_window);
 }
@@ -171,12 +171,16 @@ void construct_scene()
     if(!shader->create("Module6/simple_light.vert", "Module6/simple_light.frag") ||
        !shader->get_locations())
     {
+        std::cout << "shaders failed \n";
         exit(-1);
     }
+    std::cout << "Shaders created successfully\n";
 
     // Get the position and normal locations to use when constructing VAOs
     int32_t position_loc = shader->get_position_loc();
     int32_t normal_loc = shader->get_normal_loc();
+    
+    std::cout << "Position loc: " << position_loc << ", Normal loc: " << normal_loc << " \n";
 
     // Profile curve for the vase. Unit width and height, centered at the
     // center of the vase
@@ -197,7 +201,27 @@ void construct_scene()
                                  {0.65f, 0.0f, 0.5f},
                                  {0.0f, 0.0f, 0.5f}};
 
-    // Student to define. Module 6 - define scene.
+    // ===== TEST SCENE: Just a teapot =====
+    
+    std::cout << "Creating teapot...\n";
+    // Set shader as root
+    g_scene_root = shader;
+    
+    // Create a color node for the teapot (gray/silver color)
+    auto teapot_color = std::make_shared<cg::ColorNode>(cg::Color4(0.50754f, 0.50754f, 0.50754f, 1.0f));
+    shader->add_child(teapot_color);
+    
+    // Create a transform to scale and position the teapot
+    auto teapot_transform = std::make_shared<cg::TransformNode>();
+    teapot_transform->scale(3.0f, 3.0f, 3.0f);  // Scale up the teapot
+    teapot_transform->translate(0.0f, 50.0f, 20.0f);  // Move it up and forward in view
+    teapot_color->add_child(teapot_transform);
+    
+    // Create the teapot mesh (level 3 subdivision is reasonable)
+    auto teapot = std::make_shared<cg::MeshTeapot>(3, position_loc, normal_loc);
+    teapot_transform->add_child(teapot);
+    std::cout << "Teapot created successfully\n";
+    g_scene_root->print_graph();
 }
 
 void create_window()
@@ -243,6 +267,8 @@ void set_gl_args()
    
    // Enable multi-sampling anti-aliasing
    glEnable(GL_MULTISAMPLE);
+
+   glViewport(0, 0, 800, 600);
 }
 
 
