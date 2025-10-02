@@ -308,7 +308,7 @@ void construct_scene()
    // Front face (y=-15, facing -y)
    auto table_top_front_transform = std::make_shared<cg::TransformNode>();
    table_top_front_transform->translate(0.0f, -15.0f, 23.0f);
-   table_top_front_transform->rotate_x(-90.0f);
+   table_top_front_transform->rotate_x(90.0f);
    table_top_front_transform->scale(60.0f, 6.0f, 1.0f);
    table_parent_transform->add_child(table_top_front_transform);
    auto table_top_front = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
@@ -317,7 +317,7 @@ void construct_scene()
    // Back face (y=15, facing +y)
    auto table_top_back_transform = std::make_shared<cg::TransformNode>();
    table_top_back_transform->translate(0.0f, 15.0f, 23.0f);
-   table_top_back_transform->rotate_x(90.0f);
+   table_top_back_transform->rotate_x(-90.0f);
    table_top_back_transform->scale(60.0f, 6.0f, 1.0f);
    table_parent_transform->add_child(table_top_back_transform);
    auto table_top_back = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
@@ -327,7 +327,7 @@ void construct_scene()
    auto table_top_left_transform = std::make_shared<cg::TransformNode>();
    table_top_left_transform->translate(-30.0f, 0.0f, 23.0f);
    table_top_left_transform->rotate_x(90.0f);
-   table_top_left_transform->rotate_y(90.0f);
+   table_top_left_transform->rotate_y(-90.0f);
    table_top_left_transform->scale(30.0f, 6.0f, 1.0f);
    table_parent_transform->add_child(table_top_left_transform);
    auto table_top_left = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
@@ -336,46 +336,45 @@ void construct_scene()
    // Right face (x=30, facing +x)
    auto table_top_right_transform = std::make_shared<cg::TransformNode>();
    table_top_right_transform->translate(30.0f, 0.0f, 23.0f);
-   table_top_right_transform->rotate_x(90.0f);
+   table_top_right_transform->rotate_x(-90.0f);
    table_top_right_transform->rotate_y(-90.0f);
    table_top_right_transform->scale(30.0f, 6.0f, 1.0f);
    table_parent_transform->add_child(table_top_right_transform);
    auto table_top_right = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    table_top_right_transform->add_child(table_top_right);
-   /*
    // Table legs (4 legs, radius 3, height 20)
    // Leg positions relative to table center (±27 in x, ±12 in y for 60x30 table)
-   float leg_x_offset = 27.0f;
+   float leg_x_offset = 23.0f;
    float leg_y_offset = 12.0f;
    
    // Leg 1: front-left
    auto leg1_transform = std::make_shared<cg::TransformNode>();
-   leg1_transform->scale(1.0f, 1.0f, 20.0f);
    leg1_transform->translate(-leg_x_offset, -leg_y_offset, 10.0f);
+   leg1_transform->scale(1.0f, 1.0f, 20.0f);
    table_parent_transform->add_child(leg1_transform);
    auto leg1 = std::make_shared<cg::ConicSurface>(3.0f, 3.0f, 16, 1, position_loc, normal_loc);
    leg1_transform->add_child(leg1);
 
    // Leg 2: front-right
    auto leg2_transform = std::make_shared<cg::TransformNode>();
-   leg2_transform->scale(1.0f, 1.0f, 20.0f);
    leg2_transform->translate(leg_x_offset, -leg_y_offset, 10.0f);
+   leg2_transform->scale(1.0f, 1.0f, 20.0f);
    table_parent_transform->add_child(leg2_transform);
    auto leg2 = std::make_shared<cg::ConicSurface>(3.0f, 3.0f, 16, 1, position_loc, normal_loc);
    leg2_transform->add_child(leg2);
 
    // Leg 3: back-left
    auto leg3_transform = std::make_shared<cg::TransformNode>();
-   leg3_transform->scale(1.0f, 1.0f, 20.0f);
    leg3_transform->translate(-leg_x_offset, leg_y_offset, 10.0f);
+   leg3_transform->scale(1.0f, 1.0f, 20.0f);
    table_parent_transform->add_child(leg3_transform);
    auto leg3 = std::make_shared<cg::ConicSurface>(3.0f, 3.0f, 16, 1, position_loc, normal_loc);
    leg3_transform->add_child(leg3);
 
    // Leg 4: back-right
    auto leg4_transform = std::make_shared<cg::TransformNode>();
-   leg4_transform->scale(1.0f, 1.0f, 20.0f);
    leg4_transform->translate(leg_x_offset, leg_y_offset, 10.0f);
+   leg4_transform->scale(1.0f, 1.0f, 20.0f);
    table_parent_transform->add_child(leg4_transform);
    auto leg4 = std::make_shared<cg::ConicSurface>(3.0f, 3.0f, 16, 1, position_loc, normal_loc);
    leg4_transform->add_child(leg4);
@@ -388,8 +387,8 @@ void construct_scene()
    table_parent_transform->add_child(teapot_color);
    
    auto teapot_transform = std::make_shared<cg::TransformNode>();
-   teapot_transform->scale(8.0f, 8.0f, 8.0f);
    teapot_transform->translate(0.0f, 0.0f, 26.0f);
+   teapot_transform->scale(2.0f, 2.0f, 2.0f);
    teapot_color->add_child(teapot_transform);
    
    auto teapot = std::make_shared<cg::MeshTeapot>(3, position_loc, normal_loc);
@@ -411,55 +410,54 @@ void construct_scene()
 
    // Box bottom
    auto box_bottom_transform = std::make_shared<cg::TransformNode>();
-   box_bottom_transform->scale(20.0f, 20.0f, 1.0f);
    box_bottom_transform->translate(0.0f, 0.0f, 0.0f);
+   box_bottom_transform->scale(20.0f, 20.0f, 1.0f);
    box_color->add_child(box_bottom_transform);
    auto box_bottom = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    box_bottom_transform->add_child(box_bottom);
 
    // Box top
    auto box_top_transform = std::make_shared<cg::TransformNode>();
-   box_top_transform->scale(20.0f, 20.0f, 1.0f);
    box_top_transform->translate(0.0f, 0.0f, 15.0f);
+   box_top_transform->scale(20.0f, 20.0f, 1.0f);
    box_color->add_child(box_top_transform);
    auto box_top = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    box_top_transform->add_child(box_top);
 
    // Box front side
    auto box_front_transform = std::make_shared<cg::TransformNode>();
-   box_front_transform->scale(20.0f, 15.0f, 1.0f);
-   box_front_transform->rotate_x(-90.0f);
    box_front_transform->translate(0.0f, -10.0f, 7.5f);
+   box_front_transform->rotate_x(90.0f);
+   box_front_transform->scale(20.0f, 15.0f, 1.0f);
    box_color->add_child(box_front_transform);
    auto box_front = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    box_front_transform->add_child(box_front);
 
    // Box back side
    auto box_back_transform = std::make_shared<cg::TransformNode>();
-   box_back_transform->scale(20.0f, 15.0f, 1.0f);
-   box_back_transform->rotate_x(90.0f);
    box_back_transform->translate(0.0f, 10.0f, 7.5f);
+   box_back_transform->rotate_x(-90.0f);
+   box_back_transform->scale(20.0f, 15.0f, 1.0f);
    box_color->add_child(box_back_transform);
    auto box_back = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    box_back_transform->add_child(box_back);
 
    // Box left side
    auto box_left_transform = std::make_shared<cg::TransformNode>();
-   box_left_transform->scale(20.0f, 15.0f, 1.0f);
-   box_left_transform->rotate_y(90.0f);
-   box_left_transform->rotate_x(90.0f);
    box_left_transform->translate(-10.0f, 0.0f, 7.5f);
+   box_left_transform->rotate_x(-90.0f);
+   box_left_transform->rotate_y(-90.0f);
+   box_left_transform->scale(20.0f, 15.0f, 1.0f);
    box_color->add_child(box_left_transform);
    auto box_left = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    box_left_transform->add_child(box_left);
 
    // Box right side
    auto box_right_transform = std::make_shared<cg::TransformNode>();
-
    box_right_transform->translate(10.0f, 0.0f, 7.5f);
+   box_right_transform->rotate_x(-90.0f);
+   box_right_transform->rotate_y(90.0f);
    box_right_transform->scale(20.0f, 15.0f, 1.0f);
-   box_right_transform->rotate_y(-90.0f);
-   box_right_transform->rotate_x(90.0f);
    box_color->add_child(box_right_transform);
    auto box_right = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    box_right_transform->add_child(box_right);
@@ -469,8 +467,8 @@ void construct_scene()
    box_parent_transform->add_child(cone_color);
    
    auto cone_transform = std::make_shared<cg::TransformNode>();
-   cone_transform->scale(1.0f, 1.0f, 15.0f);
    cone_transform->translate(0.0f, 0.0f, 22.5f);
+   cone_transform->scale(1.0f, 1.0f, 15.0f);
    cone_color->add_child(cone_transform);
    
    auto cone = std::make_shared<cg::ConicSurface>(4.0f, 0.0f, 32, 1, position_loc, normal_loc);
@@ -502,13 +500,12 @@ void construct_scene()
                                  {0.0f, 0.0f, 0.5f}};
 
    auto vase_transform = std::make_shared<cg::TransformNode>();
-   vase_transform->scale(10.0f, 10.0f, 20.0f);
    vase_transform->translate(0.0f, 75.0f, 10.0f);
+   vase_transform->scale(10.0f, 10.0f, 20.0f);
    vase_color->add_child(vase_transform);
    
    auto vase = std::make_shared<cg::SurfaceOfRevolution>(vase_profile, 32, position_loc, normal_loc);
    vase_transform->add_child(vase);
-*/
    std::cout << "Scene construction complete\n";
    g_scene_root->print_graph();
 }
