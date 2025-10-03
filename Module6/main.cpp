@@ -202,11 +202,11 @@ void construct_scene()
    shader->add_child(floor_color);
    
    auto floor_transform = std::make_shared<cg::TransformNode>();
-   floor_transform->scale(200.0f, 200.0f, 1.0f);  // Scale to 200x200
    floor_transform->translate(0.0f, 0.0f, 0.0f);   // At origin (floor level)
+   floor_transform->scale(200.0f, 200.0f, 1.0f);  // Scale to 200x200
    floor_color->add_child(floor_transform);
    
-   auto floor_square = std::make_shared<cg::UnitSquare>(position_loc, normal_loc);
+   auto floor_square = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    floor_transform->add_child(floor_square);
 
    // --- WALLS ---
@@ -215,40 +215,41 @@ void construct_scene()
 
    // Back wall (y = 100)
    auto back_wall_transform = std::make_shared<cg::TransformNode>();
-   back_wall_transform->scale(200.0f, 80.0f, 1.0f);
-   back_wall_transform->rotate_x(90.0f);
    back_wall_transform->translate(0.0f, 100.0f, 40.0f);
+   back_wall_transform->rotate_x(90.0f);
+   back_wall_transform->scale(200.0f, 80.0f, 1.0f);
    wall_color->add_child(back_wall_transform);
-   auto back_wall = std::make_shared<cg::UnitSquare>(position_loc, normal_loc);
+   auto back_wall = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    back_wall_transform->add_child(back_wall);
-
+   
    // Front wall (y = -100)
    auto front_wall_transform = std::make_shared<cg::TransformNode>();
-   front_wall_transform->scale(200.0f, 80.0f, 1.0f);
-   front_wall_transform->rotate_x(-90.0f);
+
    front_wall_transform->translate(0.0f, -100.0f, 40.0f);
+   front_wall_transform->rotate_x(-90.0f);
+   front_wall_transform->scale(200.0f, 80.0f, 1.0f);
    wall_color->add_child(front_wall_transform);
-   auto front_wall = std::make_shared<cg::UnitSquare>(position_loc, normal_loc);
+   auto front_wall = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    front_wall_transform->add_child(front_wall);
 
    // Left wall (x = -100)
    auto left_wall_transform = std::make_shared<cg::TransformNode>();
-   left_wall_transform->scale(200.0f, 80.0f, 1.0f);
-   left_wall_transform->rotate_y(90.0f);
-   left_wall_transform->rotate_x(90.0f);
    left_wall_transform->translate(-100.0f, 0.0f, 40.0f);
+   left_wall_transform->rotate_x(90.0f);
+   left_wall_transform->rotate_y(90.0f);
+   left_wall_transform->scale(200.0f, 80.0f, 1.0f);
    wall_color->add_child(left_wall_transform);
-   auto left_wall = std::make_shared<cg::UnitSquare>(position_loc, normal_loc);
+   auto left_wall = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    left_wall_transform->add_child(left_wall);
 
    // Right wall (x = 100)
    auto right_wall_transform = std::make_shared<cg::TransformNode>();
-   right_wall_transform->scale(200.0f, 80.0f, 1.0f);
-   right_wall_transform->rotate_y(-90.0f);
-   right_wall_transform->rotate_x(90.0f);
    right_wall_transform->translate(100.0f, 0.0f, 40.0f);
+   right_wall_transform->rotate_x(90.0f);
+   right_wall_transform->rotate_y(-90.0f);
+   right_wall_transform->scale(200.0f, 80.0f, 1.0f);
    wall_color->add_child(right_wall_transform);
-   auto right_wall = std::make_shared<cg::UnitSquare>(position_loc, normal_loc);
+   auto right_wall = std::make_shared<cg::UnitSquareSurface>(10 ,position_loc, normal_loc);
    right_wall_transform->add_child(right_wall);
 
    // --- CEILING ---
@@ -256,11 +257,12 @@ void construct_scene()
    shader->add_child(ceiling_color);
    
    auto ceiling_transform = std::make_shared<cg::TransformNode>();
-   ceiling_transform->scale(200.0f, 200.0f, 1.0f);
    ceiling_transform->translate(0.0f, 0.0f, 80.0f);
+   ceiling_transform->rotate_x(180.0f);
+   ceiling_transform->scale(200.0f, 200.0f, 1.0f);
    ceiling_color->add_child(ceiling_transform);
    
-   auto ceiling_square = std::make_shared<cg::UnitSquare>(position_loc, normal_loc);
+   auto ceiling_square = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    ceiling_transform->add_child(ceiling_square);
 
    // ========================================================================
@@ -278,12 +280,13 @@ void construct_scene()
 
    // Table top (60x30x6, bottom at z=20, so center at z=23)
    auto table_top_transform = std::make_shared<cg::TransformNode>();
-   table_top_transform->scale(60.0f, 30.0f, 6.0f);
    table_top_transform->translate(0.0f, 0.0f, 23.0f);
+   table_top_transform->scale(60.0f, 30.0f, 6.0f);
    table_parent_transform->add_child(table_top_transform);
-   auto table_top = std::make_shared<cg::UnitSquare>(position_loc, normal_loc);
+   auto table_top = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    table_top_transform->add_child(table_top);
 
+   /*
    // Table legs (4 legs, radius 3, height 20)
    // Leg positions relative to table center (±27 in x, ±12 in y for 60x30 table)
    float leg_x_offset = 27.0f;
@@ -355,7 +358,7 @@ void construct_scene()
    box_bottom_transform->scale(20.0f, 20.0f, 1.0f);
    box_bottom_transform->translate(0.0f, 0.0f, 0.0f);
    box_color->add_child(box_bottom_transform);
-   auto box_bottom = std::make_shared<cg::UnitSquare>(position_loc, normal_loc);
+   auto box_bottom = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    box_bottom_transform->add_child(box_bottom);
 
    // Box top
@@ -363,7 +366,7 @@ void construct_scene()
    box_top_transform->scale(20.0f, 20.0f, 1.0f);
    box_top_transform->translate(0.0f, 0.0f, 15.0f);
    box_color->add_child(box_top_transform);
-   auto box_top = std::make_shared<cg::UnitSquare>(position_loc, normal_loc);
+   auto box_top = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    box_top_transform->add_child(box_top);
 
    // Box front side
@@ -372,7 +375,7 @@ void construct_scene()
    box_front_transform->rotate_x(-90.0f);
    box_front_transform->translate(0.0f, -10.0f, 7.5f);
    box_color->add_child(box_front_transform);
-   auto box_front = std::make_shared<cg::UnitSquare>(position_loc, normal_loc);
+   auto box_front = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    box_front_transform->add_child(box_front);
 
    // Box back side
@@ -381,7 +384,7 @@ void construct_scene()
    box_back_transform->rotate_x(90.0f);
    box_back_transform->translate(0.0f, 10.0f, 7.5f);
    box_color->add_child(box_back_transform);
-   auto box_back = std::make_shared<cg::UnitSquare>(position_loc, normal_loc);
+   auto box_back = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    box_back_transform->add_child(box_back);
 
    // Box left side
@@ -391,17 +394,18 @@ void construct_scene()
    box_left_transform->rotate_x(90.0f);
    box_left_transform->translate(-10.0f, 0.0f, 7.5f);
    box_color->add_child(box_left_transform);
-   auto box_left = std::make_shared<cg::UnitSquare>(position_loc, normal_loc);
+   auto box_left = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    box_left_transform->add_child(box_left);
 
    // Box right side
    auto box_right_transform = std::make_shared<cg::TransformNode>();
+
+   box_right_transform->translate(10.0f, 0.0f, 7.5f);
    box_right_transform->scale(20.0f, 15.0f, 1.0f);
    box_right_transform->rotate_y(-90.0f);
    box_right_transform->rotate_x(90.0f);
-   box_right_transform->translate(10.0f, 0.0f, 7.5f);
    box_color->add_child(box_right_transform);
-   auto box_right = std::make_shared<cg::UnitSquare>(position_loc, normal_loc);
+   auto box_right = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    box_right_transform->add_child(box_right);
 
    // Cone on top of box (radius 4, height 15)
@@ -448,7 +452,7 @@ void construct_scene()
    
    auto vase = std::make_shared<cg::SurfaceOfRevolution>(vase_profile, 32, position_loc, normal_loc);
    vase_transform->add_child(vase);
-
+*/
    std::cout << "Scene construction complete\n";
    g_scene_root->print_graph();
 }

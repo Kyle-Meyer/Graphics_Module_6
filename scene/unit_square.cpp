@@ -17,7 +17,7 @@ UnitSquareSurface::UnitSquareSurface(uint32_t n, int32_t position_loc, int32_t n
       {
          //calculate the positions in range -0.5 and 0.5
          float x = -0.5f + static_cast<float>(j) * step;
-         float y = -0.5f + static_cast<float>(j) * step;
+         float y = -0.5f + static_cast<float>(i) * step;
          float z = 0.0f;
 
          //create vertex with position and normal 
@@ -30,9 +30,9 @@ UnitSquareSurface::UnitSquareSurface(uint32_t n, int32_t position_loc, int32_t n
    }
 
    //create faces with 2 triangles per square 
-   for(uint32_t i = 0; i <= n; i++)
+   for(uint32_t i = 0; i < n; i++)
    {
-      for(uint32_t j = 0; j <= n; j++)
+      for(uint32_t j = 0; j < n; j++)
       {
          //calculate the vertices 
          uint16_t v0 = static_cast<uint16_t>(i * (n + 1) + j); //bottom left 
