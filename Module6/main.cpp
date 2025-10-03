@@ -279,13 +279,69 @@ void construct_scene()
    table_color->add_child(table_parent_transform);
 
    // Table top (60x30x6, bottom at z=20, so center at z=23)
+   /*
    auto table_top_transform = std::make_shared<cg::TransformNode>();
-   table_top_transform->translate(0.0f, 0.0f, 23.0f);
-   table_top_transform->scale(60.0f, 30.0f, 6.0f);
+   table_top_transform->translate(0.0f, 0.0f, 18.0f);
+   table_top_transform->scale(60.0f, 30.0f, 1.0f);
    table_parent_transform->add_child(table_top_transform);
    auto table_top = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
    table_top_transform->add_child(table_top);
+*/
 
+   // Top face (z=26)
+   auto table_top_top_transform = std::make_shared<cg::TransformNode>();
+   table_top_top_transform->translate(0.0f, 0.0f, 26.0f);
+   table_top_top_transform->scale(60.0f, 30.0f, 1.0f);
+   table_parent_transform->add_child(table_top_top_transform);
+   auto table_top_top = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
+   table_top_top_transform->add_child(table_top_top);
+   
+   // Bottom face (z=20)
+   auto table_top_bottom_transform = std::make_shared<cg::TransformNode>();
+   table_top_bottom_transform->translate(0.0f, 0.0f, 20.0f);
+   table_top_bottom_transform->rotate_x(180.0f);  // Flip to face down
+   table_top_bottom_transform->scale(60.0f, 30.0f, 1.0f);
+   table_parent_transform->add_child(table_top_bottom_transform);
+   auto table_top_bottom = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
+   table_top_bottom_transform->add_child(table_top_bottom);
+   
+   // Front face (y=-15, facing -y)
+   auto table_top_front_transform = std::make_shared<cg::TransformNode>();
+   table_top_front_transform->translate(0.0f, -15.0f, 23.0f);
+   table_top_front_transform->rotate_x(-90.0f);
+   table_top_front_transform->scale(60.0f, 6.0f, 1.0f);
+   table_parent_transform->add_child(table_top_front_transform);
+   auto table_top_front = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
+   table_top_front_transform->add_child(table_top_front);
+   
+   // Back face (y=15, facing +y)
+   auto table_top_back_transform = std::make_shared<cg::TransformNode>();
+   table_top_back_transform->translate(0.0f, 15.0f, 23.0f);
+   table_top_back_transform->rotate_x(90.0f);
+   table_top_back_transform->scale(60.0f, 6.0f, 1.0f);
+   table_parent_transform->add_child(table_top_back_transform);
+   auto table_top_back = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
+   table_top_back_transform->add_child(table_top_back);
+   
+   // Left face (x=-30, facing -x)
+   auto table_top_left_transform = std::make_shared<cg::TransformNode>();
+   table_top_left_transform->translate(-30.0f, 0.0f, 23.0f);
+   table_top_left_transform->rotate_x(90.0f);
+   table_top_left_transform->rotate_y(90.0f);
+   table_top_left_transform->scale(30.0f, 6.0f, 1.0f);
+   table_parent_transform->add_child(table_top_left_transform);
+   auto table_top_left = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
+   table_top_left_transform->add_child(table_top_left);
+   
+   // Right face (x=30, facing +x)
+   auto table_top_right_transform = std::make_shared<cg::TransformNode>();
+   table_top_right_transform->translate(30.0f, 0.0f, 23.0f);
+   table_top_right_transform->rotate_x(90.0f);
+   table_top_right_transform->rotate_y(-90.0f);
+   table_top_right_transform->scale(30.0f, 6.0f, 1.0f);
+   table_parent_transform->add_child(table_top_right_transform);
+   auto table_top_right = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
+   table_top_right_transform->add_child(table_top_right);
    /*
    // Table legs (4 legs, radius 3, height 20)
    // Leg positions relative to table center (±27 in x, ±12 in y for 60x30 table)
