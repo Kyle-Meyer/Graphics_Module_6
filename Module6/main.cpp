@@ -278,16 +278,6 @@ void construct_scene()
    table_parent_transform->rotate_z(30.0f);
    table_color->add_child(table_parent_transform);
 
-   // Table top (60x30x6, bottom at z=20, so center at z=23)
-   /*
-   auto table_top_transform = std::make_shared<cg::TransformNode>();
-   table_top_transform->translate(0.0f, 0.0f, 18.0f);
-   table_top_transform->scale(60.0f, 30.0f, 1.0f);
-   table_parent_transform->add_child(table_top_transform);
-   auto table_top = std::make_shared<cg::UnitSquareSurface>(10, position_loc, normal_loc);
-   table_top_transform->add_child(table_top);
-*/
-
    // Top face (z=26)
    auto table_top_top_transform = std::make_shared<cg::TransformNode>();
    table_top_top_transform->translate(0.0f, 0.0f, 26.0f);
@@ -352,7 +342,7 @@ void construct_scene()
    leg1_transform->translate(-leg_x_offset, -leg_y_offset, 10.0f);
    leg1_transform->scale(1.0f, 1.0f, 20.0f);
    table_parent_transform->add_child(leg1_transform);
-   auto leg1 = std::make_shared<cg::ConicSurface>(3.0f, 3.0f, 16, 1, position_loc, normal_loc);
+   auto leg1 = std::make_shared<cg::ConicSurface>(3.0f, 3.0f, 18, 1, position_loc, normal_loc);
    leg1_transform->add_child(leg1);
 
    // Leg 2: front-right
@@ -388,7 +378,7 @@ void construct_scene()
    
    auto teapot_transform = std::make_shared<cg::TransformNode>();
    teapot_transform->translate(0.0f, 0.0f, 26.0f);
-   teapot_transform->scale(2.0f, 2.0f, 2.0f);
+   teapot_transform->scale(2.5f, 2.5f, 2.5f);
    teapot_color->add_child(teapot_transform);
    
    auto teapot = std::make_shared<cg::MeshTeapot>(3, position_loc, normal_loc);
@@ -510,6 +500,8 @@ void construct_scene()
    g_scene_root->print_graph();
 }
 
+
+
 void create_window()
 {
    // Set OpenGL attributes before creating the window
@@ -523,7 +515,7 @@ void create_window()
    
    // Create the window
    g_sdl_window = SDL_CreateWindow(
-       "Module 6 - 3D Scene",
+       "Module 6 - 3D Scene Kyle Meyer",
        800,  // width
        600,  // height
        SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
